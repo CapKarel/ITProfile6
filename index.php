@@ -36,3 +36,25 @@ if (isset($_GET['delete'])) {
 // Načtení všech zájmů
 $stmt = $db->query("SELECT * FROM interests ORDER BY name ASC");
 $interests = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+<?php if (isset($_SESSION['message'])): ?>
+    <div class="alert">
+        <?= $_SESSION['message']; unset($_SESSION['message']); ?>
+    </div>
+<?php endif; ?>
+
+<form method="post">
+    <input type="text" name="name" placeholder="Nový zájem..." required>
+    <button type="submit" name="add_interest">Přidat</button>
+</form>
+
+<ul>
+    <?php foreach ($interests as $interest): ?>
+        <li>
+            <?= htmlspecialchars($interest['name']) ?>
+            <a href="edit.php?id=<?= $interest['id'] ?>">Upravit</a>
+            <a href="index.php?delete=<?= $interest['id'] ?>" onclick="return confirm('Opravdu?')">Smazat</a>
+        </li>
+    <?php <?php endforeach; ?>
+</ul>
