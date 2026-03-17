@@ -29,3 +29,10 @@ if (isset($_GET['delete'])) {
     header("Location: index.php");
     exit;
 }
+
+
+
+
+// Načtení všech zájmů
+$stmt = $db->query("SELECT * FROM interests ORDER BY name ASC");
+$interests = $stmt->fetchAll(PDO::FETCH_ASSOC);
